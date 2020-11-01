@@ -1,5 +1,7 @@
 package com.example.demo.dataStructure.commonStructure;
 
+import com.example.demo.searchAlgorithm.BinarySearch;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +11,15 @@ public class Array {
 
 
     public static void main(String[] args) {
+
+        int[][] matrix = {
+            {1,2,3,4,6},
+            {10,23,56,86,99},
+            {101,103,127,187,188},
+            {222,333,444,555,666}
+        };
+
+        System.out.println(findNumberIn2DArray(matrix,101));
 
     }
 
@@ -113,21 +124,72 @@ public class Array {
      */
     public static boolean findNumberIn2DArray(int[][] matrix, int target){
 
-        //解法1，遍历数组，转入HashSet，Hash查找
-        //时间n，空间n
+        /**
+         * 解法1：对每一行进行折半查找，非递归实现
+         * 时间复杂度：n*log2m，速度较快，运行时间0ms，2020-11-1击败100%，但是内存占用多，44.4M，只击败60%
+         * 结果：0ms 100%  44.4M，66.7%
+         *
+         * 理论时间复杂度：nlog2m ，空间复杂度 1
+         */
+
+//        //判断外层长度并无必要，因为长度为0自动不执行遍历，返回false了
+//
+//        for (int[] n : matrix){
+//
+//            if (BinarySearch.commonBinarySearch(n,target)){
+//                return true;
+//            }else continue;
+//
+//        }
+//
+//        return false;
 
 
+        /**
+         * 解法2：标志数法
+         * 强行便利法没有利用数组的递增特点，而遍历行再二分查找，则没有兼顾列的增长特性
+         * 如果将矩阵左到右增大，上到下增大的特性考虑。将矩阵左旋90°成为矩形，则类似二叉搜索树。
+         * 即：左分支元素更小，右分支元素更大，从根节点开始搜索，直到找到，如国行或列越界则无
+         * （越界表示本行/本列无要求的值，而之所以在行/列找，本就是因为大小关系，对方不可能有值）
+         * 此处标志数指的就是根节点，其实就是二叉搜索的使用，从另一个角度看待了这个数组结构
+         *
+         * 从右上角开始查找，通过判断行列值，决定变化i/j的值，从而循环改变判断的根节点，直到找到想要的点
+         * 注意输入空数组的情况，一维空数组实际上也是二维空数组
+         *
+         * 如果从左下角开始查找，则i=matrix.length - 1 j = 0;
+         * 在下面判断中对空数组直接不进入循环，而且因为一开始就没有涉及到内部数组的操作，所以不会在空数组情况下报内部数组越界 -- 更为简洁，从操作上更适合这个数据结构和目的 讲真有点叹为观止
+         *
+         * 结果：0ms 100%  44.4M，66.7%
+         *
+         * 理论时间复杂度 n * m 空间复杂度 1
+         *
+         */
 
 
+        if (matrix.length == 0){
+            return false;
+        }
 
-        //解法2，分析题目，数据增序排列
-        //1.判断一维数组长度决定是否进入该数组查找
-        //2.在一维数组内使用折半查找
+        int i = 0;
+        int j = matrix[0].length - 1;
 
+        while ( j >= 0 && i < matrix.length){
 
+            //如果大于，则向小的方向找，小于则向大的方向找
+            if (matrix[i][j] > target) j--;
+            else if (matrix[i][j] < target) i++;
+            else return true;
+
+        }
 
         return false;
+
+
+
+
+
     }
+
 
 
 
