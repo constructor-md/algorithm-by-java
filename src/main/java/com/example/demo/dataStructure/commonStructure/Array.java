@@ -12,14 +12,27 @@ public class Array {
 
     public static void main(String[] args) {
 
-        int[][] matrix = {
-            {1,2,3,4,6},
-            {10,23,56,86,99},
-            {101,103,127,187,188},
-            {222,333,444,555,666}
-        };
+//        int[][] matrix = {
+//            {1,2,3,4,6},
+//            {10,23,56,86,99},
+//            {101,103,127,187,188},
+//            {222,333,444,555,666}
+//        };
+//
+//        System.out.println(findNumberIn2DArray(matrix,101));
 
-        System.out.println(findNumberIn2DArray(matrix,101));
+
+        int k = 10;
+
+//        System.out.println(Integer.toBinaryString(((k << 10) + k)>>10));
+        int m = k << 10;
+//        System.out.println((((k << 10) + k) << 22) >> 22);
+        k = (k << 10) + k;
+        System.out.println(k);
+        System.out.println(Integer.toBinaryString(k));
+        System.out.println((k << 22) >>> 22);
+        System.out.println(k >> 10);
+
 
     }
 
@@ -268,6 +281,7 @@ public class Array {
         for (int i = 0;i < numbers.length ; i++) {
             j = numbers.length - 1 - i;
 
+            //还需要考虑更多边界情况，包括相遇、在两头
             if (numbers[j] < numbers[j-1]) return numbers[j];            if (numbers[j] < numbers[j-1]) return numbers[j];
             if (numbers[i] > numbers[i+1]) return numbers[i+1];
             if (numbers[j] < numbers[j-1]) return numbers[j];
@@ -292,6 +306,100 @@ public class Array {
         return 0;
     }
 
+
+    /**
+     * 力扣1480：一维数组动态和
+     * 给出一个数组nums 动态和计算公式为：runningSum[i] = sum(nums[0]...nums[i])
+     * 如输入数组nums = [1,2,3,4],输出为[1,1+2,1+2+3,1+2+3+4]
+     * 数组内值在-10^6-10^6 数据量较大
+     *
+     */
+    public int[] runningSum(int[] nums){
+
+        //可知结果数组长度与原数组一样
+        //数组的取用十分快
+        //遍历一次长度，取值相加，每次取值为一次操作的话，可见每次操作都要取之前的值，时间和空间复杂度都高
+        //观察可见，每个操作的值都是前一次操作加本次操作，所以记录前一次的值不需要重头算起，时间复杂度省下
+        //观察可见，既然每次都不需要从头算起，那么之前的数就没意义，意义聚焦在前一个算数上，所以可以直接操作原数组，空间复杂度省下
+
+        //结果：2020/11/17 0ms 击败100% ， 38.5m，击败90.36%
+        for (int i = 0 ; i < nums.length ; i++){
+            if (i == 0){
+                continue;
+            }
+            nums[i] = nums[i-1] + nums[i];
+        }
+
+        return nums;
+    }
+
+
+    /**
+     * 力扣1470：重新排列数组
+     * 给出一个数组nums 元素2n个 按[x1,x2...xn,y1,y1...yn]格式排列
+     * 将数组按照[x1,y1,x2,y2...xn.yn]格式排列
+     * 数组长度恒等于2n
+     *
+     */
+    public int[] shuffle(int[] nums,int n){
+
+        //如果使用新数组放置元素，则空间复杂度n
+        //且遍历数组需要至少一次，使用双指针时间复杂度也为n
+        //如果在原数组插入元素，数组插入元素困难，时间更为漫长
+        //考虑在原数组替换元素则与插入类似，如果直接替换则会覆盖导致错误，替换前面的会导致后面的需要替换
+
+        //法一，新数组双指针法
+        //结果：2020/11/17 耗时1ms 击败21.47%， 内存38.7M，击败76.91%
+        //从性能上看，还有很大提升空间
+//        int[] result = new int[2*n];
+//        int j = n;
+//        int i = 0;
+//        boolean k = true;
+//        for (int m = 0 ; m < 2 * n ; m ++){
+//
+//            //交替
+//            if (k){
+//                result[m] = nums[i];
+//                i++;
+//            }else {
+//                result[m] = nums[j];
+//                j++;
+//            }
+//            k = !k;
+//        }
+
+
+        //法2：新数组数学规律法（关注奇偶）
+        //结果：2020/11/17 0ms 击败100% ， 38.6M，击败84.21%
+        //其敏锐发现了奇偶和前后半部分位置的关系，虽然这一点其实显而易见，但是仔细观察最后付诸实践，逻辑精炼
+        // 虽然很不服气，但是没做到的就是没练好，必须记下思维特点，另外还要更有耐性，把思考精简，归纳。
+        // 要知道，问题必然有着优雅的解法，不要放过优雅的开发自己的机会！
+//        int[] result = new int[2*n];
+//        for (int i = 0 ; i < n ; i ++ ){
+//            result[i*2] = nums[i];
+//            result[i*2+1] = nums[n+i];
+//        }
+        //每个偶数位置存原来的前半部分数，每个计数位置存原来的后半部分数，且顺序不变（头脑）
+
+        //法3：利用int法，节省空间
+        //int 数字存储32个字节，而题目中数字的范围只在1000以内，最多占用(2^10 - 1 = 1023 > 1000),10个字节
+        //利用剩下中的10个字节做存储
+        //具体实现中,每个数字都默认用最低10位存储，则使用再高的10位存储正应该排在这个位置的数字，最后再将这玩意遍历出来
+        //并结合法2，尽量降低时间
+        for (int i = 0; i < n ; i ++){
+
+            //不要改变待改变的值
+            //每次赋值使用低10位的值，每次接收值都使用高了10位值
+            nums[i*2] = (nums[i] << 10) + ((nums[i*2] << 22) >> 22);
+            nums[i*2+1] = (nums[n+i] << 10) + ((nums[i*2+1] << 22) >> 22);
+        }
+
+        for (int i :nums) {
+            i = i >> 10;
+        }
+
+        return nums;
+    }
 
 
 
