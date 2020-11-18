@@ -381,7 +381,7 @@ public class Array {
 //        }
         //每个偶数位置存原来的前半部分数，每个计数位置存原来的后半部分数，且顺序不变（头脑）
 
-        //法3：利用int法，节省空间
+        //法3：利用int字节法，节省空间
         //int 数字存储32个字节，而题目中数字的范围只在1000以内，最多占用(2^10 - 1 = 1023 > 1000),10个字节
         //利用剩下中的10个字节做存储
         //具体实现中,每个数字都默认用最低10位存储，则使用再高的10位存储正应该排在这个位置的数字，最后再将这玩意遍历出来
@@ -399,6 +399,116 @@ public class Array {
         }
 
         return nums;
+    }
+
+
+    /**
+     * 力扣1512：好数对的数目
+     * 给出一个数组nums，如果里面有一组数字满足 nums[i] = nums[j] 且i < j 就是一个好数对
+     * 要求给出好数对的数目
+     */
+    public int numIdenticalPairs(int[] nums){
+
+        /**
+         * 暴力遍历法
+         * 2020/11/18 1ms，击败82.41% 38.1M 击败59.43%
+         *
+         */
+        //计数器
+        int result = 0;
+
+        for (int i = 0; i < nums.length ; i ++){
+
+            for (int j = i + 1 ; j < nums.length ; j ++){
+                if (nums[j] == nums[i]){
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 力扣1431：拥有最多糖的小孩
+     * 给出一个数组candies和一个整数extraCandies ，数组中candies[i]代表第i个孩子拥有的糖果数
+     * 对每一个孩子，检查是否存在一个方案，将额外的糖分配给孩子后，该孩子拥有最多糖果，允许多个孩子同时拥有最多糖果
+     * 如[2,3,5,1,3] 3
+     * 输出[true,true,true,false,true]
+     *
+     */
+    public List<Boolean> kidsWithCandies(int[] candies, int extraCandies){
+
+
+        /**
+         * 最大值法，找到分配额外糖果前孩子有最多糖果的数目，即数组最大值
+         * 遍历数组判断与最大值的差距可知结果
+         * 糖果数是正整数
+         * 2020/11/18 1ms击败99.80% 38.8M 击败55.58%
+         */
+        List<Boolean> result = new ArrayList<>();
+        int max = 0;
+
+        //遍历一次找到最大值
+        for(int i = 0 ; i < candies.length ; i ++){
+            if (candies[i] > max){
+                max = candies[i];
+            }
+        }
+
+        //再遍历一次得到结果
+        for(int i = 0 ; i < candies.length ; i ++){
+            if (candies[i] + extraCandies >= max){
+                result.add(true);
+            }else {
+                result.add(false);
+            }
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 程序员面试金典 面试题08.03 魔术索引
+     * 数组A中，如果A[i] = i ;则称i为魔术索引
+     * 给出一个有序整数数组，找出魔术索引，有的话返回，没有则返回-1，有多个则返回索引最小的一个
+     *
+     */
+    public int findMagicIndex(int[] nums){
+
+        //直接遍历
+        //2020/1/18 1ms 击败51.89% 39.2M 击败79.55%
+//        for (int i = 0 ; i < nums.length ; i ++){
+//            if (nums[i] == i){
+//                return i;
+//            }
+//        }
+
+        //法二：二分减枝
+        //二分法判断中间值是否满足要求，满足则从继续从左边找
+        //不满足则回到右边找
+        //以此类推
+        //最坏情况下时间空间都是n，遍历栈深度n
+        //2020/11/18 0ms 击败100% 38.9M 击败97.23%
+        return getAnswer(nums, 0, nums.length - 1);
+
+
+        //失败的法3：企图使用有序条件找到第一个不合法数加条件，使得后面数均论证为不合法从而剪枝
+        //但是这个非严格的有序数组输入使得A[i] - i的值呈现为[0,-1,-1,0,-1,0]的无序性，导致不成功
+
+    }
+    public int getAnswer(int[] nums, int left, int right) {
+        if (left > right) {
+            return -1;
+        }
+        int mid = (right - left) / 2 + left;
+        int leftAnswer = getAnswer(nums, left, mid - 1);
+        if (leftAnswer != -1) {
+            return leftAnswer;
+        } else if (nums[mid] == mid) {
+            return mid;
+        }
+        return getAnswer(nums, mid + 1, right);
     }
 
 
