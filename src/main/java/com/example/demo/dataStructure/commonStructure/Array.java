@@ -487,7 +487,7 @@ public class Array {
         //法二：二分减枝
         //二分法判断中间值是否满足要求，满足则从继续从左边找
         //不满足则回到右边找
-        //以此类推
+        //左右分别处理，其实已经是分治法了 唉 牛皮
         //最坏情况下时间空间都是n，遍历栈深度n
         //2020/11/18 0ms 击败100% 38.9M 击败97.23%
         return getAnswer(nums, 0, nums.length - 1);
@@ -511,6 +511,9 @@ public class Array {
         return getAnswer(nums, mid + 1, right);
     }
 
+    /**
+     *
+     */
 
 
 }
