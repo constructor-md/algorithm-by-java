@@ -96,12 +96,17 @@ public class BinaryTree {
 
     /**
      * 二叉树的层序遍历
-     * 输入二叉树根节点、输出该树的层序遍历
+     * 输入二叉树根节点、输出该树的层序遍历 返回一个二维数组区分层
      * 迭代解法-广度优先搜索
      */
     public static List<List<Integer>> layerOrderByBFS(TreeNode root){
 
         List<List<Integer>> lists = new ArrayList<>();
+
+
+
+
+
 
         return lists;
     }

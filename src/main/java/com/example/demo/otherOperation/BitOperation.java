@@ -16,6 +16,9 @@ public class BitOperation {
 
         System.out.println(0>>>1);
 
+        //加法溢出
+        System.out.println(Integer.MAX_VALUE + (Integer.MAX_VALUE >> 2) - (Integer.MAX_VALUE >> 2));
+
 
 
     }
