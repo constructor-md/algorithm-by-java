@@ -1,5 +1,8 @@
 package com.example.demo.designcode.patterncreate.factorymethod;
 
+/**
+ * 根据入参生产对应对象
+ */
 public class ShapeFactory {
 
     public Shape getShape(String shapeType){
