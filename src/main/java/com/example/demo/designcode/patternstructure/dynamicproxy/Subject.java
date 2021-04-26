@@ -1,4 +1,4 @@
-package com.example.demo.designcode.patternbahavioral.dynamicproxy;
+package com.example.demo.designcode.patternstructure.dynamicproxy;
 
 
 /**

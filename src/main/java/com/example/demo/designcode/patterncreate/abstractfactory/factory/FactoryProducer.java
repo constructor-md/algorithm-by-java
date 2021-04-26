@@ -8,15 +8,15 @@ import com.example.demo.designcode.patterncreate.abstractfactory.AbstractFactory
  */
 public class FactoryProducer {
 
-    public static AbstractFactory getFactory(String factoryType){
+    public static AbstractFactory getFactory(String factoryType) {
 
-        if (factoryType == null){
+        if (factoryType == null) {
             return null;
         }
-        if ("COLOR".equalsIgnoreCase(factoryType)){
+        if ("COLOR".equalsIgnoreCase(factoryType)) {
             return new ColorFactory();
         }
-        if ("SHAPE".equalsIgnoreCase(factoryType)){
+        if ("SHAPE".equalsIgnoreCase(factoryType)) {
             return new ShapeFactory();
         }
 

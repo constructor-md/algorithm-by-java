@@ -1,4 +1,4 @@
-package com.example.demo.designcode.patternbahavioral.dynamicproxy;
+package com.example.demo.designcode.patternstructure.dynamicproxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

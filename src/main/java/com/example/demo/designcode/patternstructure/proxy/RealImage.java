@@ -1,4 +1,4 @@
-package com.example.demo.designcode.patternbahavioral.proxy;
+package com.example.demo.designcode.patternstructure.proxy;
 
 public class RealImage implements Image{
 
