@@ -1,4 +1,4 @@
-package com.example.demo.designcode.patternstructure.Bridge;
+package com.example.demo.designcode.patternstructure.bridge;
 
 public abstract class Shape {
 
