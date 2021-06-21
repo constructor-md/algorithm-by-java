@@ -16,28 +16,22 @@ public class RemoveElement {
     }
 
     public static int removeElement(int[] nums, int val) {
-        //与移出重复元素的题相似，一次遍历双指针即可解决
-
+        //双指针
         int maxIndex = nums.length - 1;
         if(maxIndex == -1) {
             return 0;
         }
         int i = 0;
+        //i指向最后不是的那个索引的后面，n向前遍历。n找到不是的数，就把这个数给i，然后i++，n遍历完后
+        //输出i作为有效长度，因为i已经在上次经历了++
         for(int n = 0; n <= maxIndex; n++) {
+            //如果是则n往后，不是则两者往后
             if(val != nums[n]) {
-                if ((i + 1) > maxIndex) {
-                    return i + 1;
-                }
-                if (i == n) {
-                    nums[i] = nums[n];
-                } else {
-                    nums[i+1] = nums[n];
-                }
-
-                i ++;
+                nums[i] = nums[n];
+                i++;
             }
         }
-        return i + 1;
+        return i;
     }
 
 
