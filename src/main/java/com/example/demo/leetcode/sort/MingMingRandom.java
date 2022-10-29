@@ -1,4 +1,4 @@
-package com.example.demo.newcoder;
+package com.example.demo.leetcode.sort;
 
 import java.util.Scanner;
 
@@ -6,6 +6,13 @@ import java.util.Scanner;
  * 明明的随机数
  *
  * 利用归并排序，时间复杂度为O(nlogn)
+ *
+ * 归并排序思路：
+ *  每次排序将数组平均分成两半，对每一半各自排序
+ *  排序后需要合并，分别将两半数组从头开始逐一比较，按大小放入更大的数组中
+ *  比较时可能有遗漏元素，将遗漏元素再次比较后补充放入数组
+ *  递归后得到有序结果
+ *
  */
 public class MingMingRandom {
 

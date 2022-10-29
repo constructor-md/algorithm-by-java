@@ -11,10 +11,7 @@ package com.example.demo.leetcode.doublepointer;
 public class SortColor {
 
     public static void sortColor(int[] nums) {
-
-        //最开始，将数组内容视作一颗无序的二叉树，根据下标确定其在树上的位置
         
-
 
 
     }
