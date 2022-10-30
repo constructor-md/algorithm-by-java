@@ -3,7 +3,7 @@ package com.example.demo.newcoder;
 import java.util.Scanner;
 
 /**
- * 明明的随机数
+ * HJ3 明明的随机数
  *
  * 利用归并排序，时间复杂度为O(nlogn)
  */
