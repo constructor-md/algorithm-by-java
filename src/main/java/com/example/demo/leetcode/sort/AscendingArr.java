@@ -1,4 +1,4 @@
-package com.example.demo.leetcode;
+package com.example.demo.leetcode.sort;
 
 /**
  * 将给定的数组升序排列

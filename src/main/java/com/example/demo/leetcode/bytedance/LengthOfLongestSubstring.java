@@ -17,7 +17,7 @@ public class LengthOfLongestSubstring {
         int result = 0;
         char[] strArr = s.toCharArray();
         //使用一个无界队列做窗口
-        ConcurrentLinkedDeque<Character> queue = new ConcurrentLinkedDeque();
+        ConcurrentLinkedDeque<Character> queue = new ConcurrentLinkedDeque<>();
         //判断队列中元素是否重复
         Map<Character, Integer> judge = new HashMap();
         for (int i = 0; i < strArr.length; i++) {
